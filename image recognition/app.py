@@ -1,5 +1,5 @@
 import tensorflow as tf 
-import tensorflow.keras as keras
+import keras as keras
 import numpy as np
 from flask import Flask, render_template, request
 model_path='./static/saved_model/train.ckpt'
@@ -8,7 +8,7 @@ restore_model=keras.models.load_model(model_path)
 app=Flask(__name__)
 @app.route('/',methods=['GET'])
 def index():    
-        return render_template('imagerecognition.html');
+        return render_template('index.html');
 @app.route('/',methods=['POST'])
 def ImageRecognition():
         
@@ -16,7 +16,7 @@ def ImageRecognition():
         image_path='./static/images/'+ img.filename;
         img.save(image_path);
         label=Predict(image_path)
-        return render_template('imagerecognition.html',imgs=image_path,l=label);
+        return render_template('index.html',imgs=image_path,l=label);
 
 def Predict(path_image):
           image=keras.preprocessing.image.load_img(path_image,target_size=(180,180))
